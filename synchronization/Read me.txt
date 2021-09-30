@@ -1,0 +1,3 @@
+Java method level synchronization
+a thread execute and end first
+then another thread will run
