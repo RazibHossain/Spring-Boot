@@ -396,3 +396,4 @@ Thread-3 → Task C
 
 
 Future represents a result of an async task but is blocking and simple, while CompletableFuture is more powerful, non-blocking, and supports chaining, combination, and exception handling.
+Future is blocking because it requires get() to retrieve the result, which pauses the calling thread. CompletableFuture is non-blocking and supports chaining, combining tasks, and callbacks.
