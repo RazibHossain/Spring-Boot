@@ -1,0 +1,24 @@
+ UPDATE "PAYROLL"."FINAL_SETTELEMENT" t SET t."POST_STATUS" = 0
+
+
+
+
+D-c -> 1000  1500
+c-tec ->200
+tec-saint-> 500
+
+Updown 2p -> 10k transport
+hotel -> 4*2500 10k hotel
+shopping -> 5k
+eat -> 5K
+
+
+Changelog:
+
+Investment:
+	1.Customer Security Deposite Edit Page Error issue fix.
+	2.Investment Encashment Edit Page Error issue fix.
+	
+
+
+id question a b c d answer qtype qlevel
