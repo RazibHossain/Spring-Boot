@@ -259,3 +259,137 @@ async-spring-boot.md
 ```
 
 and upload to your repository.
+
+# Difference Between Async and Multi-threading
+
+This document explains the difference between **asynchronous programming** and **multi-threading**. It is formatted as a Markdown file suitable for GitHub.
+
+---
+
+## 1️⃣ Core Difference
+
+* **Asynchronous (Async)**: Focuses on **non-blocking execution**. The caller does not wait for the task to finish.
+* **Multithreading**: Focuses on **parallel execution** using multiple threads to execute tasks simultaneously.
+
+---
+
+## 2️⃣ Definitions
+
+### Asynchronous (Async)
+
+* Task starts and **does not block** the caller.
+* Result is handled later via callback, future, or promise.
+* Example in Java Spring Boot:
+
+```java
+@Async
+public void sendEmail() {}
+```
+
+### Multithreading
+
+* Multiple threads execute tasks **in parallel**.
+* Threads compete for CPU resources and may require synchronization.
+* Example in Java:
+
+```java
+new Thread(() -> sendEmail()).start();
+```
+
+---
+
+## 3️⃣ Key Differences
+
+| Feature           | Async                      | Multithreading          |
+| ----------------- | -------------------------- | ----------------------- |
+| Main purpose      | Non-blocking execution     | Parallel execution      |
+| Thread usage      | May use threads internally | Explicitly uses threads |
+| Blocking          | Non-blocking               | Can be blocking         |
+| Complexity        | Simple                     | Complex                 |
+| Resource usage    | Efficient                  | Expensive               |
+| Error handling    | Easier                     | Harder                  |
+| Context switching | Minimal                    | High                    |
+| Best for          | I/O tasks                  | CPU-intensive tasks     |
+
+---
+
+## 4️⃣ Execution Model
+
+### Async
+
+* Caller triggers task.
+* Control returns immediately.
+* Task completes later.
+* Result handled via callback/future.
+
+```
+Request → Trigger Task → Continue Execution
+                     ↳ Background Execution
+```
+
+### Multithreading
+
+* Multiple threads execute tasks simultaneously.
+* Threads may need synchronization.
+
+```
+Thread-1 → Task A
+Thread-2 → Task B
+Thread-3 → Task C
+```
+
+---
+
+## 5️⃣ Real-World Analogy
+
+* **Async**: Sending an email and continuing to work without waiting for confirmation.
+* **Multithreading**: Multiple chefs cooking different dishes simultaneously.
+
+---
+
+## 6️⃣ In Spring Boot Context
+
+* **Async (`@Async`)**:
+
+  * High-level abstraction
+  * Uses thread pool internally
+  * Managed by Spring
+
+* **Multithreading**:
+
+  * Low-level control
+  * Uses `Thread` or `ExecutorService`
+  * Manual lifecycle management
+
+---
+
+## 7️⃣ When to Use
+
+### Use Async When:
+
+* I/O-bound tasks
+* API calls
+* Sending emails, notifications
+* File upload/download
+
+### Use Multithreading When:
+
+* CPU-bound tasks
+* Data processing
+* Parallel computation
+* Performance-critical logic
+
+---
+
+## 8️⃣ Common Interview Tips
+
+* Async ≠ Multithreading
+* Multithreading does not guarantee non-blocking behavior
+* Async can run on a single thread
+* Multi-threading requires synchronization and context switching
+
+---
+
+## 9️⃣ One-Line Answer for Interviews
+
+> **Async focuses on non-blocking execution, while multithreading focuses on parallel execution using multiple threads.**
