@@ -393,3 +393,6 @@ Thread-3 → Task C
 ## 9️⃣ One-Line Answer for Interviews
 
 > **Async focuses on non-blocking execution, while multithreading focuses on parallel execution using multiple threads.**
+
+
+Future represents a result of an async task but is blocking and simple, while CompletableFuture is more powerful, non-blocking, and supports chaining, combination, and exception handling.
