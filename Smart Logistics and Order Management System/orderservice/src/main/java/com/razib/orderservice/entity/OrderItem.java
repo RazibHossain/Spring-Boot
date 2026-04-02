@@ -15,19 +15,22 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String productName;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
+    private Integer productId;
+
+    @Column(nullable = true)
     private String productCode;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer quantity;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = true, precision = 10, scale = 2)
     private BigDecimal unitPrice;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = true, precision = 10, scale = 2)
     private BigDecimal subtotal;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,11 +40,12 @@ public class OrderItem {
 
     public OrderItem() {}
 
-    public OrderItem(String productName, String productCode, Integer quantity, BigDecimal unitPrice) {
+    public OrderItem(String productName, String productCode, Integer quantity, BigDecimal unitPrice,Integer productId) {
         this.productName = productName;
         this.productCode = productCode;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+        this.productId = productId;
         this.subtotal = unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
 
@@ -76,7 +80,7 @@ public class OrderItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        this.subtotal = this.unitPrice.multiply(BigDecimal.valueOf(quantity));
+//        this.subtotal = this.unitPrice.multiply(BigDecimal.valueOf("1"));
     }
 
     public BigDecimal getUnitPrice() {
@@ -102,5 +106,13 @@ public class OrderItem {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 }

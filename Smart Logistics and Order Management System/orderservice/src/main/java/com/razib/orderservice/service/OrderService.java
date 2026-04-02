@@ -2,11 +2,14 @@ package com.razib.orderservice.service;
 
 // OrderService.java
 
+import com.razib.orderservice.dto.OrderItemRequestDTO;
 import com.razib.orderservice.dto.OrderItemResponseDTO;
 import com.razib.orderservice.dto.OrderRequestDTO;
 import com.razib.orderservice.dto.OrderResponseDTO;
 import com.razib.orderservice.entity.Order;
 import com.razib.orderservice.entity.OrderItem;
+import com.razib.orderservice.entity.OrderStatus;
+import com.razib.orderservice.feignclient.ProductServiceClient;
 import com.razib.orderservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +26,45 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    ProductServiceClient productClient;
+
+    public Order createOrder(OrderRequestDTO request) {
+
+        // 🔹 Validate stock (inter-service call)
+        for (OrderItemRequestDTO item : request.getItems()) {
+            Integer stock = productClient.checkStock(item.getProductId()); // assuming productId exists
+
+            if (stock == null || stock < item.getQuantity()) {
+                throw new RuntimeException("Product ID " + item.getProductId() + " is out of stock");
+            }
+        }
+
+        // 🔹 Build Order
+        Order order = new Order();
+        order.setCustomerName(request.getCustomerName());
+        order.setCustomerEmail(request.getCustomerEmail());
+        order.setStatus(OrderStatus.CREATED);
+//        order.setCreatedAt(LocalDateTime.now());
+
+        // 🔹 Map OrderItems
+        List<OrderItem> orderItems = request.getItems().stream().map(itemDTO -> {
+            OrderItem item = new OrderItem();
+            item.setProductId(itemDTO.getProductId());   // IMPORTANT
+            item.setQuantity(itemDTO.getQuantity());
+//            item.setUnitPrice(itemDTO.getUnitPrice());
+            item.setOrder(order); // set relation
+            return item;
+        }).toList();
+
+        order.setItems(orderItems);
+
+        // 🔹 Save Order
+        return orderRepository.save(order);
+    }
+
     @Transactional
-    public OrderResponseDTO createOrder(OrderRequestDTO orderRequest) {
+    public OrderResponseDTO createOrderLocal(OrderRequestDTO orderRequest) {
         // Create new order with CREATED status
         Order order = new Order(orderRequest.getCustomerName(), orderRequest.getCustomerEmail());
 
@@ -34,7 +74,8 @@ public class OrderService {
                     itemDTO.getProductName(),
                     itemDTO.getProductCode(),
                     itemDTO.getQuantity(),
-                    itemDTO.getUnitPrice()
+                    itemDTO.getUnitPrice(),
+                    itemDTO.getProductId()
             );
             order.addItem(item);
         }

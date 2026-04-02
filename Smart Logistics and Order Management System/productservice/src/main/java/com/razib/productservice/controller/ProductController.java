@@ -34,4 +34,9 @@ public class ProductController {
                                @RequestParam Integer stock) {
         return productService.updateStock(id, stock);
     }
+
+    @GetMapping(value = "/checkStock/{productId}")
+    public Integer getStock(@PathVariable Integer productId) {
+        return productService.checkStock(productId);
+    }
 }

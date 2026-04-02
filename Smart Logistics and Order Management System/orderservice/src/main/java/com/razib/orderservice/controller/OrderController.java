@@ -3,6 +3,7 @@ package com.razib.orderservice.controller;
 
 import com.razib.orderservice.dto.OrderRequestDTO;
 import com.razib.orderservice.dto.OrderResponseDTO;
+import com.razib.orderservice.entity.Order;
 import com.razib.orderservice.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping(value = "/create/order")
-    public ResponseEntity<OrderResponseDTO> createOrder(@Valid @RequestBody OrderRequestDTO orderRequest) {
-        OrderResponseDTO createdOrder = orderService.createOrder(orderRequest);
+    public ResponseEntity<Order> createOrder(@Valid @RequestBody OrderRequestDTO orderRequest) {
+        Order createdOrder = orderService.createOrder(orderRequest);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 

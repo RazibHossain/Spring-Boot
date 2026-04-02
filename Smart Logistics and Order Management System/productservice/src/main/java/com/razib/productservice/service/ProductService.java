@@ -36,4 +36,8 @@ public class ProductService {
         product.setStock(stock);
         return productRepository.save(product);
     }
+
+    public Integer checkStock(Integer productId) {
+        return productRepository.getStock(productId);
+    }
 }

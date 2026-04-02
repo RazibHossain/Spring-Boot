@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 
 public class OrderItemRequestDTO {
 
+    private Integer productId;
+
     @NotBlank(message = "Product name is required")
     private String productName;
 
@@ -54,5 +56,13 @@ public class OrderItemRequestDTO {
 
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 }
