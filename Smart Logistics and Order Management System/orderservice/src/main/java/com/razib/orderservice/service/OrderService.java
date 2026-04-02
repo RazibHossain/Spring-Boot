@@ -2,13 +2,11 @@ package com.razib.orderservice.service;
 
 // OrderService.java
 
-import com.razib.orderservice.dto.OrderItemRequestDTO;
-import com.razib.orderservice.dto.OrderItemResponseDTO;
-import com.razib.orderservice.dto.OrderRequestDTO;
-import com.razib.orderservice.dto.OrderResponseDTO;
+import com.razib.orderservice.dto.*;
 import com.razib.orderservice.entity.Order;
 import com.razib.orderservice.entity.OrderItem;
 import com.razib.orderservice.entity.OrderStatus;
+import com.razib.orderservice.feignclient.PaymentClient;
 import com.razib.orderservice.feignclient.ProductServiceClient;
 import com.razib.orderservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,9 @@ public class OrderService {
 
     @Autowired
     ProductServiceClient productClient;
+
+    @Autowired
+    PaymentClient paymentClient;
 
     public Order createOrder(OrderRequestDTO request) {
 
@@ -130,5 +131,36 @@ public class OrderService {
         response.setUnitPrice(item.getUnitPrice());
         response.setSubtotal(item.getSubtotal());
         return response;
+    }
+
+    // 🔥 Separate payment API
+    public Order payOrder(Long orderId) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        // Prevent double payment
+        if ("PAID".equals(order.getStatus())) {
+            throw new RuntimeException("Order already paid");
+        }
+
+        // 🔹 Calculate total
+        double totalAmount =10;
+
+        // 🔹 Call Payment Service
+        PaymentRequestDTO request =
+                new PaymentRequestDTO(order.getId(), totalAmount);
+
+        PaymentResponseDTO response =
+                paymentClient.pay(request);
+
+        // 🔹 Update status
+        if ("SUCCESS".equalsIgnoreCase(response.getStatus())) {
+            order.setStatus(OrderStatus.PAID);
+        } else {
+            order.setStatus(OrderStatus.FAILED);
+        }
+
+        return orderRepository.save(order);
     }
 }

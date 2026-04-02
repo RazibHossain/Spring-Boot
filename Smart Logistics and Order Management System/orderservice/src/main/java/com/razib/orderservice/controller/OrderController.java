@@ -36,4 +36,9 @@ public class OrderController {
         List<OrderResponseDTO> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
+
+    @PostMapping("/{orderId}/pay")
+    public Order payOrder(@PathVariable Long orderId) {
+        return orderService.payOrder(orderId);
+    }
 }
