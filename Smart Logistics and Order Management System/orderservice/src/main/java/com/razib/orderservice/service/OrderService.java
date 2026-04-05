@@ -109,10 +109,12 @@ public class OrderService {
         response.setStatus(order.getStatus());
 
         // Calculate total amount
-        BigDecimal totalAmount = order.getItems().stream()
-                .map(OrderItem::getSubtotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        response.setTotalAmount(totalAmount);
+//        BigDecimal totalAmount = order.getItems().stream()
+//                .map(OrderItem::getSubtotal)
+//                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//        response.setTotalAmount(totalAmount);
+        // Calculate total amount
+        BigDecimal totalAmount = BigDecimal.ZERO;
 
         // Convert items
         response.setItems(order.getItems().stream()
