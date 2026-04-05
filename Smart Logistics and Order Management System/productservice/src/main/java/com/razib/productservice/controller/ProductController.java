@@ -1,10 +1,13 @@
 package com.razib.productservice.controller;
 
 
+import com.razib.productservice.component.AuthContext;
 import com.razib.productservice.dto.ProductRequest;
 import com.razib.productservice.entity.Product;
 import com.razib.productservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    @Autowired
+    AuthContext authContext;
 
     // Create Product
     @PostMapping(value = "/add")
@@ -25,6 +30,9 @@ public class ProductController {
     // Get All Products
     @GetMapping(value = "/getAll")
     public List<Product> getAllProducts() {
+        System.out.println("User: " + authContext.getUsername());
+        System.out.println("Roles: " + authContext.getRoles());
+        System.out.println("UserId: " + authContext.getUserId());
         return productService.getAllProducts();
     }
 
