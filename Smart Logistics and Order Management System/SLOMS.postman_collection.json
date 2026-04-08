@@ -156,11 +156,51 @@
     {
       "name": "productservice-Create Product",
       "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "accessTokenUrl",
+              "value": "http://localhost:9001/oauth2/token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "http://localhost:9001/oauth2/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "https://oauth.pstmn.io/v1/callback",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "openid profile read write",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "secret",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "gateway-client",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"name\": \"Mobile\",\r\n  \"description\": \"Gaming Mobile\",\r\n  \"price\": 900,\r\n  \"stock\": 20\r\n}",
+          "raw": "{\r\n  \"name\": \"Smart Watch\",\r\n  \"description\": \"Hailo\",\r\n  \"price\": 3500,\r\n  \"stock\": 31\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -168,14 +208,11 @@
           }
         },
         "url": {
-          "raw": "http://localhost:9010/products/add",
-          "protocol": "http",
+          "raw": "{{SLOMS_BaseUrl}}products/add",
           "host": [
-            "localhost"
+            "{{SLOMS_BaseUrl}}products"
           ],
-          "port": "9010",
           "path": [
-            "products",
             "add"
           ]
         }
@@ -186,11 +223,41 @@
       "name": "productservice-GetAll Product",
       "request": {
         "auth": {
-          "type": "bearer",
-          "bearer": [
+          "type": "oauth2",
+          "oauth2": [
             {
-              "key": "token",
-              "value": "eyJraWQiOiJiYzk1N2VhZS0yMDQ1LTQ0ODktOWYwNi0yMzFmMzNmNjU2ZTMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6ImdhdGV3YXktY2xpZW50IiwibmJmIjoxNzc0OTQ0MTkxLCJzY29wZSI6WyJyZWFkIiwib3BlbmlkIiwicHJvZmlsZSIsIndyaXRlIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTc3NDk0NTk5MSwiaWF0IjoxNzc0OTQ0MTkxLCJqdGkiOiI2ODFkYmI0ZC1hMDY0LTQwMjctYWNlOS1lMTNhMWFjMzRhZmIifQ.Y6MXAHOHONvluNO0U_1c0CYUInW-_r5y1Qc3JEvp-uVRZfarvJ3cHZ78Vzc0pOsfFL5Orbvkb1UnZRFXyu5A2nm904H-Qv7A5XIX65jThBJ-0aKTQ9BWm86j5Gt39Qy8r3lZ05MoMlSEMYBqOabfURO_bWjyp8gfbznD0qi7jviPXZlKWnT5cFOlTHPBZ1QyFixD_RUgN3bQzSRKHJSaS5-Vb5zhEAVfFcNUHLktjSgugO0Od3b0drLjBACHsu0q2m3foShq4xhpFPqHQh43v0g2jGNRGQlbqGEAg03G2XM0Q_hvD6eD6266Ph-_V0Z-Zj0JvFyP7DEYLLJctgawbA",
+              "key": "accessTokenUrl",
+              "value": "http://localhost:9001/oauth2/token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "http://localhost:9001/oauth2/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "https://oauth.pstmn.io/v1/callback",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "openid profile read write",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "secret",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "gateway-client",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
               "type": "string"
             }
           ]
@@ -198,14 +265,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:9010/products/getAll",
-          "protocol": "http",
+          "raw": "{{SLOMS_BaseUrl}}products/getAll",
           "host": [
-            "localhost"
+            "{{SLOMS_BaseUrl}}products"
           ],
-          "port": "9010",
           "path": [
-            "products",
             "getAll"
           ]
         }
@@ -215,17 +279,54 @@
     {
       "name": "productservice-Update Stock",
       "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "accessTokenUrl",
+              "value": "http://localhost:9001/oauth2/token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "http://localhost:9001/oauth2/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "https://oauth.pstmn.io/v1/callback",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "openid profile read write",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "secret",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "gateway-client",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
         "method": "PUT",
         "header": [],
         "url": {
-          "raw": "http://localhost:9010/products/1/stock/update?stock=20",
-          "protocol": "http",
+          "raw": "{{SLOMS_BaseUrl}}products/1/stock/update?stock=20",
           "host": [
-            "localhost"
+            "{{SLOMS_BaseUrl}}products"
           ],
-          "port": "9010",
           "path": [
-            "products",
             "1",
             "stock",
             "update"
@@ -243,6 +344,46 @@
     {
       "name": "orderservice-Create Order",
       "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "accessTokenUrl",
+              "value": "http://localhost:9001/oauth2/token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "http://localhost:9001/oauth2/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "https://oauth.pstmn.io/v1/callback",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "openid profile read write",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "secret",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "gateway-client",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [],
         "body": {
@@ -255,14 +396,11 @@
           }
         },
         "url": {
-          "raw": "http://localhost:9020/orderservice/create/order",
-          "protocol": "http",
+          "raw": "{{SLOMS_BaseUrl}}orderservice/create/order",
           "host": [
-            "localhost"
+            "{{SLOMS_BaseUrl}}orderservice"
           ],
-          "port": "9020",
           "path": [
-            "orderservice",
             "create",
             "order"
           ]
@@ -273,17 +411,54 @@
     {
       "name": "orderservice-View Order by Id",
       "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "accessTokenUrl",
+              "value": "http://localhost:9001/oauth2/token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "http://localhost:9001/oauth2/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "https://oauth.pstmn.io/v1/callback",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "openid profile read write",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "secret",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "gateway-client",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:9020/orderservice/getOrder/2",
-          "protocol": "http",
+          "raw": "{{SLOMS_BaseUrl}}orderservice/getOrder/2",
           "host": [
-            "localhost"
+            "{{SLOMS_BaseUrl}}orderservice"
           ],
-          "port": "9020",
           "path": [
-            "orderservice",
             "getOrder",
             "2"
           ]
@@ -294,17 +469,54 @@
     {
       "name": "orderservice-Get All Orders",
       "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "accessTokenUrl",
+              "value": "http://localhost:9001/oauth2/token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "http://localhost:9001/oauth2/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "https://oauth.pstmn.io/v1/callback",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "openid profile read write",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "secret",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "gateway-client",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:9020/orderservice/getAllOrders",
-          "protocol": "http",
+          "raw": "{{SLOMS_BaseUrl}}orderservice/getAllOrders",
           "host": [
-            "localhost"
+            "{{SLOMS_BaseUrl}}orderservice"
           ],
-          "port": "9020",
           "path": [
-            "orderservice",
             "getAllOrders"
           ]
         }
@@ -314,17 +526,54 @@
     {
       "name": "orderservice-Order Payments",
       "request": {
-        "method": "GET",
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "accessTokenUrl",
+              "value": "http://localhost:9001/oauth2/token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "http://localhost:9001/oauth2/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "https://oauth.pstmn.io/v1/callback",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "openid profile read write",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "secret",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "gateway-client",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
         "header": [],
         "url": {
-          "raw": "http://localhost:9020/orderservice/1/pay",
-          "protocol": "http",
+          "raw": "{{SLOMS_BaseUrl}}orderservice/1/pay",
           "host": [
-            "localhost"
+            "{{SLOMS_BaseUrl}}orderservice"
           ],
-          "port": "9020",
           "path": [
-            "orderservice",
             "1",
             "pay"
           ]
