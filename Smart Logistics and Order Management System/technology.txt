@@ -1,1 +1,1 @@
-user authentication,authorization,dynamic access control of services and apis,
+user authentication,authorization,dynamic access control of services and apis,central configuration added
