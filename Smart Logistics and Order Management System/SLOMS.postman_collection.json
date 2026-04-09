@@ -580,6 +580,106 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Cofigserver-GetApplication.properties",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8888/application/default",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8888",
+          "path": [
+            "application",
+            "default"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cofigserver-GetSevice.properties",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8888/product-service/dev",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8888",
+          "path": [
+            "product-service",
+            "dev"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "cofigserver- Change property without Restart Service",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "accessTokenUrl",
+              "value": "http://localhost:9001/oauth2/token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "http://localhost:9001/oauth2/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "https://oauth.pstmn.io/v1/callback",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "openid profile read write",
+              "type": "string"
+            },
+            {
+              "key": "clientSecret",
+              "value": "secret",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "gateway-client",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:9000/actuator/refresh",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9000",
+          "path": [
+            "actuator",
+            "refresh"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
