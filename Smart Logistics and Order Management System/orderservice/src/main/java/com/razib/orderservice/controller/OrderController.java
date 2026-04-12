@@ -3,6 +3,7 @@ package com.razib.orderservice.controller;
 
 import com.razib.orderservice.dto.OrderRequestDTO;
 import com.razib.orderservice.dto.OrderResponseDTO;
+import com.razib.orderservice.dto.PaymentResponseDTO;
 import com.razib.orderservice.entity.Order;
 import com.razib.orderservice.service.OrderService;
 import jakarta.validation.Valid;
@@ -38,7 +39,7 @@ public class OrderController {
     }
 
     @PostMapping("/{orderId}/pay")
-    public Order payOrder(@PathVariable Long orderId) {
+    public PaymentResponseDTO payOrder(@PathVariable Long orderId) {
         return orderService.payOrder(orderId);
     }
 }

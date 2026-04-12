@@ -136,7 +136,7 @@ public class OrderService {
     }
 
     // 🔥 Separate payment API
-    public Order payOrder(Long orderId) {
+    public PaymentResponseDTO payOrder(Long orderId) {
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
@@ -163,6 +163,7 @@ public class OrderService {
             order.setStatus(OrderStatus.FAILED);
         }
 
-        return orderRepository.save(order);
+         orderRepository.save(order);
+        return response;
     }
 }
