@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "paymentservice", url = "http://localhost:9030",fallback = PaymentClientFallback.class)
+@FeignClient(name = "paymentservice",fallback = PaymentClientFallback.class)
 public interface PaymentClient {
 
     @PostMapping("/payments")
