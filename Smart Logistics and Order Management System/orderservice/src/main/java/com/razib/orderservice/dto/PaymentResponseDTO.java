@@ -9,4 +9,5 @@ public class PaymentResponseDTO {
     private Double amount;
     private String status;
     private String transactionId;
+    private String message;
 }
