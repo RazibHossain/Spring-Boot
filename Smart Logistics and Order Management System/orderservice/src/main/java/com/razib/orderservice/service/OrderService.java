@@ -39,6 +39,9 @@ public class OrderService {
             if (stock == null || stock < item.getQuantity()) {
                 throw new RuntimeException("Product ID " + item.getProductId() + " is out of stock");
             }
+            if (stock == -1) {
+                throw new RuntimeException("Product Service Unavailable");
+            }
         }
 
         // 🔹 Build Order
