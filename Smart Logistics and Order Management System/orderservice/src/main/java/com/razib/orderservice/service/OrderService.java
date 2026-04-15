@@ -36,12 +36,17 @@ public class OrderService {
         for (OrderItemRequestDTO item : request.getItems()) {
             Integer stock = productClient.checkStock(item.getProductId()); // assuming productId exists
 
+            if (stock == -1) {
+                Order order = new Order();
+
+                order.setStatus(OrderStatus.FAILED);
+                order.setCustomerEmail("Service Unavailable");
+                return order;
+            }
             if (stock == null || stock < item.getQuantity()) {
                 throw new RuntimeException("Product ID " + item.getProductId() + " is out of stock");
             }
-            if (stock == -1) {
-                throw new RuntimeException("Product Service Unavailable");
-            }
+
         }
 
         // 🔹 Build Order
