@@ -80,6 +80,17 @@
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 		<!-- Lombok -->
+		<!-- REQUIRED for tracing — you commented this out, add it back -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- REQUIRED for Feign calls to carry trace headers -->
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-micrometer</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
