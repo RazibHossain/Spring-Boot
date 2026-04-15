@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0c3e613c-f514-422a-943b-145f5f210284" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../apigateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../apigateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../authservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../authservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../central-configuration/apigateway-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../central-configuration/apigateway-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../central-configuration/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../central-configuration/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../central-configuration/circuit-breaker-dev.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../central-configuration/circuit-breaker-prod.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../central-configuration/order-service-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../central-configuration/order-service-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../central-configuration/order-service-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../central-configuration/order-service-prod.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resilience4j_guide.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resilience4j_interview_diagram.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/razib/circuit_breaker/CircuitBreakerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/razib/circuit_breaker/CircuitBreakerApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../orderservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../orderservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../paymentservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../paymentservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../productservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../productservice/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3CFt8HS2CZMxbcaaBDy96zQThY1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.CircuitBreakerApplication.executor": "Debug",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/tmp/Spring-Boot/Smart Logistics and Order Management System/circuit-breaker",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\tmp\Spring-Boot\Smart Logistics and Order Management System\circuit-breaker" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="CircuitBreakerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="circuit-breaker" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.razib.circuit_breaker.CircuitBreakerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0c3e613c-f514-422a-943b-145f5f210284" name="Changes" comment="" />
+      <created>1775992985109</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775992985109</updated>
+      <workItem from="1775992986553" duration="4978000" />
+      <workItem from="1776234229524" duration="1609000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
