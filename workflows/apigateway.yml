@@ -3,7 +3,7 @@ name: Api Gateway CI
 on:
   push:
     paths:
-      - 'Smart Logistics and Order Management System/order-service/**'
+      - 'Smart Logistics and Order Management System/apigateway/**'
 
 jobs:
   build:
