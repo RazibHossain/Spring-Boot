@@ -1,4 +1,4 @@
-name: Api Gateway CI
+name: Auth Server CI
 
 on:
   push:

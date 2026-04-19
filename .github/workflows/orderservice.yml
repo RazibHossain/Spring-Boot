@@ -1,4 +1,4 @@
-name: Api Gateway CI
+name: Order Service CI
 
 on:
   push:

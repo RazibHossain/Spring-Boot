@@ -1,4 +1,4 @@
-name: Api Gateway CI
+name: Payment Service CI
 
 on:
   push:
