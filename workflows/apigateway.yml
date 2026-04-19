@@ -1,23 +1,23 @@
-name: CI Pipeline
+name: Api Gateway CI
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      - 'Smart Logistics and Order Management System/order-service/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Smart Logistics and Order Management System/apigateway
+
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-
-      - name: Build with Maven
+      - name: Build JAR
         run: mvn clean package -DskipTests
 
       - name: Login to Docker Hub
