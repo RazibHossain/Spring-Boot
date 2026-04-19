@@ -1,1 +1,2 @@
 user authentication,authorization,dynamic access control of services and apis,central configuration added
+uploaded in docker up using github actions
