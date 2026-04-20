@@ -1,0 +1,149 @@
+version: "3.8"
+
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - micro-net
+
+  config-server:
+    image: razibhossain/config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - micro-net
+
+  discovery-service:
+    image: razibhossain/discovery-service
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+
+      SPRING_CLOUD_CONFIG_USERNAME: configuser
+      SPRING_CLOUD_CONFIG_PASSWORD: 1234
+    networks:
+      - micro-net
+
+  auth-service:
+    image: razibhossain/authservice
+    ports:
+      - "9001:9001"
+    depends_on:
+      - mysql
+      - discovery-service
+      - config-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+
+      SPRING_CLOUD_CONFIG_USERNAME: configuser
+      SPRING_CLOUD_CONFIG_PASSWORD: 1234
+
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    networks:
+      - micro-net
+
+  product-service:
+    image: razibhossain/product-service
+    depends_on:
+      - mysql
+      - discovery-service
+      - config-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/productdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+
+      SPRING_CLOUD_CONFIG_USERNAME: configuser
+      SPRING_CLOUD_CONFIG_PASSWORD: 1234
+
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    networks:
+      - micro-net
+
+  order-service:
+    image: razibhossain/order-service
+    depends_on:
+      - mysql
+      - discovery-service
+      - config-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/orderdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+
+      SPRING_CLOUD_CONFIG_USERNAME: configuser
+      SPRING_CLOUD_CONFIG_PASSWORD: 1234
+
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    networks:
+      - micro-net
+
+  payment-service:
+    image: razibhossain/payment-service
+    depends_on:
+      - mysql
+      - discovery-service
+      - config-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/paymentdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+
+      SPRING_CLOUD_CONFIG_USERNAME: configuser
+      SPRING_CLOUD_CONFIG_PASSWORD: 1234
+
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    networks:
+      - micro-net
+
+  api-gateway:
+    image: razibhossain/apigateway
+    ports:
+      - "9000:9000"
+    depends_on:
+      - discovery-service
+      - auth-service
+      - config-server
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+
+      SPRING_CLOUD_CONFIG_USERNAME: configuser
+      SPRING_CLOUD_CONFIG_PASSWORD: 1234
+
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    networks:
+      - micro-net
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - micro-net
+
+networks:
+  micro-net:
+
+volumes:
+  mysql-data:

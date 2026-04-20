@@ -18,7 +18,7 @@ public class SecurityConfig {
 
                 // Secure all endpoints
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
 
                 // Enable Basic Authentication
