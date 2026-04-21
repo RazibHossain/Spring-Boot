@@ -1,0 +1,59 @@
+dockerising services
+
+add dockerfile for each services 
+
+FROM eclipse-temurin:17-jdk-jammy
+
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+
+ENTRYPOINT ["java","-jar","/app.jar"]
+
+goto services terminal 
+mvn clean package //create a jar package
+docker build -t authservice .          //build docker image file
+docker tag authservice razibhossain/authservice  // tag the docker image for pushing it to docker hub
+docker push razibhossain/authservice             // push the image in docker hub. it is mandatory for running dockercompose  
+
+configure docker compose
+
+then 
+docker-compose up -d  //it pull from docker registry if not exist docker image on my local and runs the image on my local. if locally exist it doesn't face. though old version exist on local
+or
+docker-compose up -d --pull always  // it will pull first then runs on local
+
+
+though my all service need mysql db and up a mysql server. then i need to create db for the services
+
+docker exec -it mysql mysql -uroot -p              //run on terminal and it will give mysql terminal for using  the we create database inside it.
+
+quit; // from exist the mql terminal
+
+
+1. Stop everything
+docker-compose down
+2. Remove old containers + network + orphan services (IMPORTANT for clean start)
+docker-compose down --remove-orphans
+3. Remove old volumes (THIS resets MySQL data)
+docker-compose down -v
+
+👉 Use this only if you want full reset (recommended for dev)
+
+4. Clean unused Docker cache (optional but good)
+docker system prune -f
+5. Pull latest images
+docker-compose pull
+6. Start everything fresh
+docker-compose up -d
+7. Watch logs (very important)
+docker-compose logs -f
+
+or for single service:
+
+docker-compose logs -f order-service
+
+
+docker-compose down
+docker-compose down --remove-orphans
+docker system prune -f
+docker-compose up -d
