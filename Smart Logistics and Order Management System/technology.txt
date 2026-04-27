@@ -1,2 +1,3 @@
 user authentication,authorization,dynamic access control of services and apis,central configuration added
 uploaded in docker up using github actions
+“I implemented event-driven communication using Kafka where Order Service publishes events and Notification Service asynchronously processes email notifications.”

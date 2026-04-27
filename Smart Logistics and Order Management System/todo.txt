@@ -1,1 +1,8 @@
-config server auto refresh using apache kafka when git config-server property changes
+config server auto refresh using apache kafka when git config-server property changes.
+notification using kafka,
+distributed lock using redis,
+request queing using kafka,
+rate limiting,
+safa pattern,
+cqrs,
+grafana

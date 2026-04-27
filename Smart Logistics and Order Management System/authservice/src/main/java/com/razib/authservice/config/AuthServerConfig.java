@@ -66,7 +66,14 @@ public class AuthServerConfig {
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/.well-known/jwks.json",
+                                "/oauth2/jwks",
+                                "/actuator/health"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
                 .formLogin(Customizer.withDefaults());
         return http.build();
     }

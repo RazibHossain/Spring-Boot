@@ -30,6 +30,13 @@ docker exec -it mysql mysql -uroot -p              //run on terminal and it will
 quit; // from exist the mql terminal
 
 
+CREATE DATABASE authdb;
+CREATE DATABASE productdb;
+CREATE DATABASE orderdb;
+CREATE DATABASE paymentdb;
+CREATE DATABASE gatewaydb;
+
+
 1. Stop everything
 docker-compose down
 2. Remove old containers + network + orphan services (IMPORTANT for clean start)
