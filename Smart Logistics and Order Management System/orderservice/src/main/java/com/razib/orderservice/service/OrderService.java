@@ -6,8 +6,10 @@ import com.razib.orderservice.dto.*;
 import com.razib.orderservice.entity.Order;
 import com.razib.orderservice.entity.OrderItem;
 import com.razib.orderservice.entity.OrderStatus;
+import com.razib.orderservice.event.OrderPaidEvent;
 import com.razib.orderservice.feignclient.PaymentClient;
 import com.razib.orderservice.feignclient.ProductServiceClient;
+import com.razib.orderservice.kafka.OrderEventProducer;
 import com.razib.orderservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,8 @@ public class OrderService {
 
     @Autowired
     PaymentClient paymentClient;
+    @Autowired
+    OrderEventProducer orderEventProducer;
 
     public Order createOrder(OrderRequestDTO request) {
 
@@ -165,9 +169,17 @@ public class OrderService {
                 paymentClient.pay(request);
 
         // 🔹 Update status
-        if ("SUCCESS".equalsIgnoreCase(response.getStatus())) {
-            order.setStatus(OrderStatus.PAID);
-        } else {
+            if ("SUCCESS".equalsIgnoreCase(response.getStatus())) {
+                order.setStatus(OrderStatus.PAID);
+
+                OrderPaidEvent event = new OrderPaidEvent(
+                        order.getId(),
+                        order.getCustomerEmail(),
+                        totalAmount
+                );
+
+                orderEventProducer.sendOrderPaidEvent(event); // 🔥 Kafka
+            }else {
             order.setStatus(OrderStatus.FAILED);
         }
 
