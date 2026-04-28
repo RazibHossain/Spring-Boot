@@ -5,4 +5,5 @@ request queing using kafka,
 rate limiting,
 safa pattern,
 cqrs,
-grafana
+grafana,
+centralized logging
