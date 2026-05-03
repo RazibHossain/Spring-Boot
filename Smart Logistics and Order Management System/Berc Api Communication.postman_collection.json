@@ -1,0 +1,218 @@
+{
+  "info": {
+    "_postman_id": "ea17e6e4-6649-4d53-bd07-81328abb2ec9",
+    "name": "Berc Api Communication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12996538"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "super_admin",
+              "type": "text"
+            },
+            {
+              "key": "password",
+              "value": "super321",
+              "type": "text"
+            },
+            {
+              "key": "t_delimeter",
+              "value": "RPGCL",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://192.168.10.157:8004/b_accounting/login/",
+          "protocol": "http",
+          "host": [
+            "192",
+            "168",
+            "10",
+            "157"
+          ],
+          "port": "8004",
+          "path": [
+            "b_accounting",
+            "login",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8004/b_accounting/logout/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8004",
+          "path": [
+            "b_accounting",
+            "logout",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Api Voucher Post",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\t\"manualVoucherNumber\": \"JVf-df77874\",\r\n\t\"voucherDate\": \"2025-05-06\",\r\n\t\"orgBranchName\": \"Head Office\",\r\n\t\"orgProjectName\": null,\r\n\t\"accCostCenterName\": null,\r\n\t\"refNumber\": null,\r\n\t\"voucherType\": \"CollectionJournal\",\r\n\t\"description\": null,\r\n\t\"apiEpVoucherList\": [{\r\n\t\t\t\"accCode\": \"42610\",\r\n\t\t\t\"orgPartySubtypeName\": null,\r\n\t\t\t\"amount\": 111,\r\n\t\t\t\"type\": \"D\",\r\n            \"orgPartyName\": null,\r\n            \"orgPartyTypeName\": null,\r\n\t\t\t\"transactionRef\": null,\r\n\t\t\t\"description\": \"hello\"\r\n\t\t},\r\n        {\r\n\t\t\t\"accCode\": \"85123\",\r\n\t\t\t\"orgPartySubtypeName\": null,\r\n\t\t\t\"amount\": 111,\r\n\t\t\t\"type\": \"C\",\r\n            \"orgPartyName\": null,\r\n            \"orgPartyTypeName\": null,\r\n\t\t\t\"transactionRef\": null,\r\n\t\t\t\"description\": \"hello\"\r\n\t\t}\r\n\t]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://192.168.10.86:8003/b_accounting/admin/admin/accounting/ApiVoucher/Posting/",
+          "protocol": "http",
+          "host": [
+            "192",
+            "168",
+            "10",
+            "86"
+          ],
+          "port": "8003",
+          "path": [
+            "b_accounting",
+            "admin",
+            "admin",
+            "accounting",
+            "ApiVoucher",
+            "Posting",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Voucher Edit",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\t\"manualVoucherNumber\": \"JV-df77874\",\r\n\t\"voucherDate\": \"2025-05-06\",\r\n\t\"orgBranchName\": \"Head Office\",\r\n\t\"orgProjectName\": null,\r\n\t\"accCostCenterName\": null,\r\n\t\"refNumber\": null,\r\n\t\"voucherType\": \"CollectionJournal\",\r\n\t\"description\": null,\r\n    \"bercVoucherNumber\": \"CJV-HO-14442\",\r\n\t\"apiEpVoucherList\": [{\r\n\t\t\t\"accCode\": \"42610\",\r\n\t\t\t\"orgPartySubtypeName\": null,\r\n\t\t\t\"amount\": 500,\r\n\t\t\t\"type\": \"D\",\r\n            \"orgPartyName\": null,\r\n            \"orgPartyTypeName\": null,\r\n\t\t\t\"transactionRef\": null,\r\n\t\t\t\"description\": \"hello\"\r\n\t\t},\r\n        {\r\n\t\t\t\"accCode\": \"85123\",\r\n\t\t\t\"orgPartySubtypeName\": null,\r\n\t\t\t\"amount\": 499,\r\n\t\t\t\"type\": \"C\",\r\n            \"orgPartyName\": null,\r\n            \"orgPartyTypeName\": null,\r\n\t\t\t\"transactionRef\": null,\r\n\t\t\t\"description\": \"hello\"\r\n\t\t},\r\n        {\r\n\t\t\t\"accCode\": \"05856(700)\",\r\n\t\t\t\"orgPartySubtypeName\": null,\r\n\t\t\t\"amount\": 1,\r\n\t\t\t\"type\": \"C\",\r\n            \"orgPartyName\": null,\r\n            \"orgPartyTypeName\": null,\r\n\t\t\t\"transactionRef\": null,\r\n\t\t\t\"description\": \"hello\"\r\n\t\t}\r\n\t]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://192.168.10.86:8003/b_accounting/admin/admin/accounting/ApiVoucher/Edit/",
+          "protocol": "http",
+          "host": [
+            "192",
+            "168",
+            "10",
+            "86"
+          ],
+          "port": "8003",
+          "path": [
+            "b_accounting",
+            "admin",
+            "admin",
+            "accounting",
+            "ApiVoucher",
+            "Edit",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Party Add",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\t\"partyType\": \"Financer\",\r\n\t\"fullName\": \"Razib Hossain\",\r\n\t\"printAs\": \"Rzb\",\r\n\t\"partyGroup\": \"Individual\",\r\n    \"orgPartySubtypeName\": \"srg\",\r\n\t\"manualPartyCode\": \"C-1281364\",\r\n\t\"email\": \"razib@gmail.com\",\r\n\t\"mobile\": \"01011112222\",\r\n\t\"nationalId\": 7894561237888,\r\n    \"registrationNo\": \"rgst-101\",\r\n\t\"taxIdNo\": \"4567894545\",\r\n\t\"contactPersonName\": \"Sakib\",\r\n\t\"secondContactNo\": \"01011111111\",\r\n\t\"website\": \"www.divine-it.net\",\r\n\t\"countryName\": \"Bangladesh\",\r\n\t\"divisionName\": \"Dhaka\",\r\n\t\"districtName\": \"Gazipur\",\r\n    \"upazilaName\": \"Gazipur Sadar\",\r\n    \"postOffice\": \"Bhawal Mirzapur\",\r\n\t\"postOfficeNumber\": \"456\",\r\n    \"detailAddress\": \"uttara dhaka, 1230\",\r\n\t\"orgBankName\": \"AB Bank Limited\",\r\n\t\"orgBranchName\": \"Banani\",\r\n\t\"bankAcNo\": 45678954545,\r\n\t\"bin\": \"454554\",\r\n\t\"description\": \"DEscription goes here\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8004/b_accounting/admin/admin/organization/ApiParty/PartyAdd/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8004",
+          "path": [
+            "b_accounting",
+            "admin",
+            "admin",
+            "organization",
+            "ApiParty",
+            "PartyAdd",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Mis Push Data",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://192.168.10.157:8004/b_accounting/admin/admin/etl/SchedulerLog/AccMisData/Scheduler/?accMisDataPostingId=1",
+          "protocol": "http",
+          "host": [
+            "192",
+            "168",
+            "10",
+            "157"
+          ],
+          "port": "8004",
+          "path": [
+            "b_accounting",
+            "admin",
+            "admin",
+            "etl",
+            "SchedulerLog",
+            "AccMisData",
+            "Scheduler",
+            ""
+          ],
+          "query": [
+            {
+              "key": "accMisDataPostingId",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

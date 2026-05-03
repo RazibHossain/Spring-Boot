@@ -6,3 +6,140 @@ Brokers: Kafka operates on a cluster of servers known as brokers. These brokers 
 Topics: In Kafka, a topic is a category or feed name to which records are published. Topics in Kafka are multi-subscriber; they can maintain multiple consumers, making them highly versatile. They are also partitioned, meaning a topic can be split across multiple brokers to increase throughput. 
 Producers: Producers are the clients or applications that publish (write) messages to Kafka topics. A producer decides which record to assign to which partition within a topic. This could be done randomly or by a specific attribute (like a key). 
 Consumers: Consumers read data from brokers. They subscribe to one or more topics and process the stream of records produced to them. Kafka consumers are designed to be elastic and fault-tolerant, allowing for scalable and reliable data processing. 
+
+
+What is a Distributed Transaction?
+A distributed transaction refers to a type of transaction that involves multiple, separate systems or databases, often spread across different locations or networks, which need to work together to complete a task. 
+
+What is 2PC for Distributed Transaction Management?
+2PC (Two-Phase Commit) is a protocol used to ensure all participants in a distributed transaction either commit or abort, ensuring consistency. In the first phase, the coordinator asks all participants to agree to commit, and in the second phase, participants either vote to commit or abort the transaction.
+
+Problems with Traditional Distributed Transaction Protocols
+Traditional distributed transaction protocols like Two-Phase Commit (2PC) have limitations in modern systems, primarily due to:
+
+Blocking Nature: If the coordinator fails after initiating the transaction, participants may be left waiting indefinitely, causing delays.
+Single Points of Failure: The coordinator is crucial for decision-making. If it crashes, the entire transaction can get stuck, impacting reliability.
+Network Partitions: If the network splits, some nodes might not receive the final decision, leading to inconsistent states (i.e., some nodes might commit while others don’t), which causes data inconsistency.
+
+What is the SAGA Design Pattern?
+The SAGA Design Pattern is a pattern used to manage long-running, distributed transactions in a microservices architecture.
+
+Instead of relying on traditional, monolithic transactions (which require locking databases across services), the SAGA pattern breaks the transaction into a series of smaller, independent operations that each belong to a different service.
+These smaller operations, also called saga steps, are executed sequentially or in parallel, with each step compensating for potential failures in the others.
+Why do we need SAGA Design Pattern?
+SAGA is needed because 2PC, while simple, doesn't work well in distributed systems where availability and fault tolerance are critical. In real-world systems, network failures, crash recovery, and long-running transactions are common, and 2PC's blocking behavior and reliance on a single coordinator can make the system unreliable and slow. SAGA provides a more flexible, decentralized approach to managing long-running distributed transactions.
+
+SAGA addresses the limitations of 2PC by breaking a transaction into smaller, independent steps, each with its own compensating action if something goes wrong. Here's how it solves key issues of 2PC:
+
+No Blocking: Unlike 2PC, which blocks participants until the transaction is complete, SAGA allows each step to execute independently, avoiding delays due to coordinator failure.
+No Single Point of Failure: SAGA doesn’t rely on a central coordinator. Each step is independent, so if one step fails, it doesn't block the entire process.
+Graceful Failure Handling: Instead of rolling back the entire transaction (as in 2PC), SAGA uses compensating actions to undo successful steps if a failure occurs, ensuring the system remains consistent.
+Resilience to Network Partitions: SAGA can continue even if parts of the network fail, because each step is independent, and compensating actions can be executed later when the partition resolves.
+
+
+How SAGA Design Pattern Works?
+The SAGA Design Pattern manages long-running distributed transactions by breaking them into smaller steps, each with its own compensating action in case of failure. Here’s how it works:
+
+Breaking Down the Transaction: A big transaction is divided into smaller, independent sub-transactions (steps), each handled by different services. For example, reserving a product, charging the customer, and shipping the item.
+Independent Execution: Each step runs independently without waiting for the others to finish. If a step succeeds, the next step proceeds.
+SAGA Execution Coordinator: The SAGA Execution Coordinator manages and coordinate the flow of these steps, triggering each one in sequence.
+Compensating Actions: If any step fails, the system doesn’t roll back everything. Instead, it executes compensating actions to undo the work done in previous successful steps, like refunding a payment or canceling a reservation.
+SAGA Log: Helps manage and track the state of a long-running distributed transaction, ensuring that all steps are completed successfully or properly compensated in case of failur
+
+
+https://www.geeksforgeeks.org/system-design/saga-design-pattern/
+https://www.geeksforgeeks.org/system-design/system-design-tutorial/
+
+
+8. Strangler Fig Pattern
+Strangler Fig Pattern incrementally replaces a legacy system with a microservices architecture. The new system gradually assumes the legacy system’s functionality until it is fully replaced.
+
+Reduces migration risk by replacing functionalities one at a time rather than all at once.
+Ideal for transitioning large monolithic applications, such as insurance platforms, to microservices.
+9. Bulkhead Pattern
+Bulkhead Pattern isolates different parts of a system so that failure in one component does not affect others. Each service or group of services operates in its own “compartment,” similar to ship bulkheads.
+
+Improves system resilience by containing failures within a single service or module.
+Ensures stability in applications like streaming platforms, where a failure in recommendations won’t affect video playback or user management.
+
+
+
+
+
+
+
+
+
+JDK = JRE + Development Tools
+✅ Required for developing Java programs (compiling, debugging, etc.).
+
+
+JDK
+ ├── JRE
+ │    ├── JVM
+ │    └── Runtime Libraries
+ └── Development Tools (javac, jar, javadoc, etc.)
+
+
+To compile a .java file → you need JDK.
+
+To run a .class or .jar file → you only need JRE.
+
+Internally → JRE launches the JVM to execute the bytecode.
+
+What it is: A full-featured software development kit for building Java applications.
+
+Contains:
+
+JRE (includes JVM)
+
+Development tools:
+
+javac (compiler)
+
+jar (archiver)
+
+javadoc (documentation generator)
+
+jdb (debugger)
+
+jstack, jconsole, jvisualvm (monitoring tools)
+
+etc.
+
+✅ JDK = JRE + Development Tools
+✅ Required for developing Java programs (compiling, debugging, etc.).
+
+
+2. JRE (Java Runtime Environment)
+What it is: A package that provides the minimum requirements to run Java applications.
+
+Contains:
+
+JVM
+
+Core libraries (e.g., java.lang, java.util)
+
+Supporting files (class loaders, configuration)
+
+Does NOT contain: Compiler (javac), debuggers, or development tools.
+
+✅ JRE = JVM + Libraries + Other runtime components
+❌ Cannot compile Java code.
+
+1. JVM (Java Virtual Machine)
+What it is: An abstract computing machine that executes Java bytecode.
+
+Main role: Provides a runtime environment where Java programs run.
+
+Key features:
+
+Converts bytecode (.class files) into machine code (JIT compilation).
+
+Manages memory (heap, stack, garbage collection).
+
+Provides security and platform independence ("Write once, run anywhere").
+
+Not a standalone – it’s part of the JRE.
+
+✅ JVM is platform-dependent (different OS have different JVM implementations).
