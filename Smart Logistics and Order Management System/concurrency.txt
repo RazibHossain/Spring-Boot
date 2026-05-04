@@ -1,0 +1,105 @@
+i have a product on stock. let assumse i run offer with minimum price. thousand of people try to buy it. what happend to my system
+
+1. Traffic spike (sudden load)
+Thousands of requests hit your backend at once.
+If your server capacity is limited → high CPU, memory pressure, slow response
+Result:
+Timeouts
+Server crash
+
+2. Race condition on stock (biggest problem)
+
+Let’s say:
+
+Stock = 100 units
+10,000 users try to buy
+
+Without protection:
+
+Multiple requests read stock = 100 at the same time
+All try to deduct
+Result:
+👉 You may sell more than 100 (overselling)
+
+Database contention
+Thousands of writes at the same time
+Row locking / table locking
+Deadlocks may occur
+
+
+
+
+L1 — Atomic DB Update
+UPDATE product
+SET stock = stock - 1
+WHERE id = 1 AND stock > 0;
+
+DB becomes bottleneck under high traffic
+Thousands of concurrent updates = slow
+Lock contention(Multiple transaction wait for locking)
+
+
+
+🟢 L2 — Transaction + Row Lock (pessimistic )
+✅ Approach
+SELECT stock FROM product WHERE id = 1 FOR UPDATE;
+
+Heavy locking
+Threads wait → slow system
+Can cause deadlocks
+
+L3 — Add Cache (Read Optimization)
+
+Use:
+
+Redis
+✅ Approach
+Read stock from Redis
+DB still does final update
+✅ Pros
+Reduces DB reads
+Faster response
+❌ Cons
+Writes still hit DB
+Cache inconsistency risk
+
+
+L4 — Redis Atomic Stock (Game changer 🔥)
+✅ Approach
+Store stock in Redis
+Use atomic operation:
+DECR product:1:stock
+Flow
+If Redis stock > 0 → allow
+Else → reject immediately
+
+✅ Pros
+Extremely fast (in-memory)
+Handles huge traffic
+Prevents overselling at entry level
+❌ Cons
+Redis crash = stock lost (if not persisted)
+DB & Redis sync complexity
+Still no request smoothing
+
+L5 — Add Queue (Traffic Control)
+
+Use:
+
+RabbitMQ
+or Apache Kafka
+✅ Approach
+User → Queue → Worker → DB
+✅ Pros
+Smooths traffic spikes
+Prevents DB overload
+Controlled processing rate
+❌ Cons
+Adds latency
+More components to manage
+Need retry & failure handling
+⬆️ Move because:
+
+👉 Need better user experience & fairness
+
+
