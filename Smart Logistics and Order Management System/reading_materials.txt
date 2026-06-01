@@ -8,57 +8,204 @@ Producers: Producers are the clients or applications that publish (write) messag
 Consumers: Consumers read data from brokers. They subscribe to one or more topics and process the stream of records produced to them. Kafka consumers are designed to be elastic and fault-tolerant, allowing for scalable and reliable data processing. 
 
 
-What is a Distributed Transaction?
-A distributed transaction refers to a type of transaction that involves multiple, separate systems or databases, often spread across different locations or networks, which need to work together to complete a task. 
 
-What is 2PC for Distributed Transaction Management?
-2PC (Two-Phase Commit) is a protocol used to ensure all participants in a distributed transaction either commit or abort, ensuring consistency. In the first phase, the coordinator asks all participants to agree to commit, and in the second phase, participants either vote to commit or abort the transaction.
+Explain CAP theorem”
 
-Problems with Traditional Distributed Transaction Protocols
-Traditional distributed transaction protocols like Two-Phase Commit (2PC) have limitations in modern systems, primarily due to:
+CAP theorem states that in a distributed system, we can only guarantee two out of consistency, availability, and partition tolerance. Since partition tolerance is unavoidable, systems usually choose between consistency and availability depending on the use case.
+. CP (Consistency + Partition Tolerance)
+Prioritize correct data
+May reject requests
+👉 Example:
+Banking system
 
-Blocking Nature: If the coordinator fails after initiating the transaction, participants may be left waiting indefinitely, causing delays.
-Single Points of Failure: The coordinator is crucial for decision-making. If it crashes, the entire transaction can get stuck, impacting reliability.
-Network Partitions: If the network splits, some nodes might not receive the final decision, leading to inconsistent states (i.e., some nodes might commit while others don’t), which causes data inconsistency.
-
-What is the SAGA Design Pattern?
-The SAGA Design Pattern is a pattern used to manage long-running, distributed transactions in a microservices architecture.
-
-Instead of relying on traditional, monolithic transactions (which require locking databases across services), the SAGA pattern breaks the transaction into a series of smaller, independent operations that each belong to a different service.
-These smaller operations, also called saga steps, are executed sequentially or in parallel, with each step compensating for potential failures in the others.
-Why do we need SAGA Design Pattern?
-SAGA is needed because 2PC, while simple, doesn't work well in distributed systems where availability and fault tolerance are critical. In real-world systems, network failures, crash recovery, and long-running transactions are common, and 2PC's blocking behavior and reliance on a single coordinator can make the system unreliable and slow. SAGA provides a more flexible, decentralized approach to managing long-running distributed transactions.
-
-SAGA addresses the limitations of 2PC by breaking a transaction into smaller, independent steps, each with its own compensating action if something goes wrong. Here's how it solves key issues of 2PC:
-
-No Blocking: Unlike 2PC, which blocks participants until the transaction is complete, SAGA allows each step to execute independently, avoiding delays due to coordinator failure.
-No Single Point of Failure: SAGA doesn’t rely on a central coordinator. Each step is independent, so if one step fails, it doesn't block the entire process.
-Graceful Failure Handling: Instead of rolling back the entire transaction (as in 2PC), SAGA uses compensating actions to undo successful steps if a failure occurs, ensuring the system remains consistent.
-Resilience to Network Partitions: SAGA can continue even if parts of the network fail, because each step is independent, and compensating actions can be executed later when the partition resolves.
+2. AP (Availability + Partition Tolerance)
+Always responds
+Data may be slightly inconsistent
+👉 Example:
+Social media feed
 
 
-How SAGA Design Pattern Works?
-The SAGA Design Pattern manages long-running distributed transactions by breaking them into smaller steps, each with its own compensating action in case of failure. Here’s how it works:
+“Why can’t we achieve both C and A?”
+Because in the presence of a network partition, a system must either reject requests to maintain consistency or accept requests and risk inconsistency. Since partitions are unavoidable in distributed systems, we cannot guarantee both consistency and availability at the same time.
 
-Breaking Down the Transaction: A big transaction is divided into smaller, independent sub-transactions (steps), each handled by different services. For example, reserving a product, charging the customer, and shipping the item.
-Independent Execution: Each step runs independently without waiting for the others to finish. If a step succeeds, the next step proceeds.
-SAGA Execution Coordinator: The SAGA Execution Coordinator manages and coordinate the flow of these steps, triggering each one in sequence.
-Compensating Actions: If any step fails, the system doesn’t roll back everything. Instead, it executes compensating actions to undo the work done in previous successful steps, like refunding a payment or canceling a reservation.
-SAGA Log: Helps manage and track the state of a long-running distributed transaction, ensuring that all steps are completed successfully or properly compensated in case of failur
+Why not both C and A?
+🔹 The key is Partition (P)
+
+In real distributed systems:
+Servers are on different machines
+Network can fail, delay, or split
+👉 This is called a network partition
+
+🔄 What happens during a partition?
+Imagine 2 nodes:
+Node A  ❌ network ❌  Node B
+
+They cannot talk to each other.
+Now the problem:
+A user sends a request.
+Option 1: Choose Consistency (C)
+Node A says:
+❌ “I’m not sure what Node B has, I won’t respond”
+
+👉 Result:
+
+✔ Data is always correct
+❌ Some requests fail
+
+➡️ You lose Availability
+
+Option 2: Choose Availability (A)
+Node A says:
+✔ “I’ll respond anyway”
+
+👉 Result:
+
+✔ System always responds
+❌ Data might be outdated
+
+➡️ You lose Consistency
+
+🔥 That’s the core reason
+
+During a partition, you cannot both:
+
+guarantee same data everywhere (C)
+and always respond (A)
+🧠 Simple Analogy
+
+Think of two ATM machines disconnected from bank server:
+
+If both allow withdrawal → 💥 double withdrawal (inconsistent)
+If one blocks → 😐 user denied (not available)
+
+👉 You must choose:
+
+Correct balance (C)
+OR always allow withdrawal (A)
 
 
-https://www.geeksforgeeks.org/system-design/saga-design-pattern/
-https://www.geeksforgeeks.org/system-design/system-design-tutorial/
 
 
-8. Strangler Fig Pattern
-Strangler Fig Pattern incrementally replaces a legacy system with a microservices architecture. The new system gradually assumes the legacy system’s functionality until it is fully replaced.
+Load balancing is a technique used to distribute incoming traffic across multiple servers to ensure scalability, high availability, and reliability of a system.
 
-Reduces migration risk by replacing functionalities one at a time rather than all at once.
-Ideal for transitioning large monolithic applications, such as insurance platforms, to microservices.
-9. Bulkhead Pattern
-Bulkhead Pattern isolates different parts of a system so that failure in one component does not affect others. Each service or group of services operates in its own “compartment,” similar to ship bulkheads.
+Challenges and Risks of Load Balancers
+Although load balancers improve performance and availability, they also introduce some challenges that must be managed properly.
 
-Improves system resilience by containing failures within a single service or module.
-Ensures stability in applications like streaming platforms, where a failure in recommendations won’t affect video playback or user management.
+Single Point of Failure: If the load balancer itself fails, it can stop traffic from reaching servers unless backup load balancers are configured.
+Performance Bottleneck: If the load balancer cannot handle very high traffic, it may slow down request processing.
+Configuration Complexity: Setting up load balancing correctly for large applications can be complex.
+Security Risks: Since load balancers sit between users and servers, they can become targets for cyber attacks.
+Cost: Hardware load balancers and high-availability configurations can increase infrastructure costs.
+
+What is the difference between scaling out and scaling up a load balancer?
+Scaling out involves adding more instances while scaling up involves adding more resources to existing instances
+
+
+Load Balancer Algorithm
+
+Round Robin (Most common)
+
+Requests distributed one by one:
+
+Req1 → S1
+Req2 → S2
+Req3 → S3
+Req4 → S1
+
+✔ Simple
+❌ Doesn’t consider server load
+
+2. Weighted Round Robin
+More powerful servers get more requests
+
+Example:
+
+S1 (weight 3)
+S2 (weight 1)
+
+👉 S1 gets more traffic
+
+3. Least Connections
+Send request to server with fewest active connections
+
+✔ Good for long-running requests
+
+4. IP Hash
+Same user always goes to same server
+
+Useful for:
+
+session-based apps
+5. Random
+Random distribution (simple but less efficient)
+
+
+Types of Load Balancers
+1. Hardware Load Balancer
+Physical devices
+Expensive
+Used in enterprises
+2. Software Load Balancer
+
+Examples:
+
+Nginx
+HAProxy
+Cloud LB (AWS ELB, GCP LB)
+3. Cloud Load Balancer
+Managed by cloud providers
+Auto scaling + health checks
+🔥 Health Check (Very Important)
+
+Load balancer continuously checks:
+
+/health → OK or FAIL
+
+If server fails:
+
+remove it from rotation
+
+What happens if LB fails?
+It becomes a single point of failure
+👉 Solution:
+Use multiple LBs + failover
+✔ Is LB stateful?
+Usually stateless
+But can store session info in some cases (sticky sessions)
+
+Reverse Proxy
+🔹 What it does
+
+A server that sits in front of backend servers and forwards requests.
+
+Client → Reverse Proxy → Backend Server
+
+But it can do MUCH more than routing.
+
+🔹 Goal
+
+👉 Security + abstraction + control
+
+🔹 Responsibilities
+1. Request routing
+/api → service A
+/auth → service B
+2. Security
+hides backend servers
+blocks malicious requests
+3. SSL termination
+handles HTTPS encryption
+4. Caching
+serve cached responses
+5. Compression / logging
+improves performance
+🔥 Example tools
+Nginx
+Apache HTTP Server
+
+They overlap, but load balancer focuses on distributing traffic across multiple instances for scalability, while reverse proxy provides additional features like security, routing, caching, and SSL termination. In modern systems, tools like Nginx can act as both.”
+
+
+
+
 
