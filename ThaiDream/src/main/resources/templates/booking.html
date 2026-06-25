@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Book Your Tour | ThaiWonder Tours</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="page-hero page-hero-sm">
+        <h1>Book Your Tour</h1>
+        <p>Complete the form below to confirm your Thailand adventure</p>
+    </div>
+
+    <section class="section">
+        <div class="booking-page-container">
+            <!-- Package Summary -->
+            <div class="booking-summary">
+                <img th:src="${package.imageUrl}" th:alt="${package.name}" class="booking-pkg-img"/>
+                <div class="booking-pkg-info">
+                    <div class="detail-badge" th:classappend="${package.freePackage} ? 'badge-free' : 'badge-paid'"
+                         th:text="${package.freePackage} ? '🎁 FREE' : ${package.category}">Category</div>
+                    <h3 th:text="${package.name}">Package Name</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> <span th:text="${package.destination}">Destination</span></p>
+                    <p><i class="fas fa-clock"></i> <span th:text="${package.duration}">Duration</span></p>
+                    <div class="booking-summary-price" th:if="${package.freePackage}">
+                        <span class="price-free">FREE</span>
+                        <small>*Condition disclosed on arrival</small>
+                    </div>
+                    <div class="booking-summary-price" th:unless="${package.freePackage}">
+                        <span class="price-amt" th:text="'$' + ${#numbers.formatDecimal(package.price, 0, 0)}">$1299</span>
+                        <small>per person</small>
+                    </div>
+                </div>
+
+                <div th:if="${package.freePackage}" class="free-booking-note">
+                    <i class="fas fa-info-circle"></i>
+                    <p>You are booking a <strong>FREE package</strong>. No payment required. One condition will be shared with you after your arrival in Thailand.</p>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="booking-form-wrap">
+                <h2>Your Details</h2>
+                <form th:action="@{/booking/confirm}" th:object="${booking}" method="post" id="bookingForm">
+                    <input type="hidden" th:field="*{packageId}" th:value="${package.id}"/>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name *</label>
+                            <input type="text" th:field="*{firstName}" class="form-control" placeholder="John" required/>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name *</label>
+                            <input type="text" th:field="*{lastName}" class="form-control" placeholder="Smith" required/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <input type="email" th:field="*{email}" class="form-control" placeholder="john@email.com" required/>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" th:field="*{phone}" class="form-control" placeholder="+1 234 567 8900" required/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nationality *</label>
+                            <input type="text" th:field="*{nationality}" class="form-control" placeholder="e.g. American" required/>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Guests *</label>
+                            <select th:field="*{guests}" class="form-control" required>
+                                <option value="">Select guests</option>
+                                <option value="1">1 Person</option>
+                                <option value="2">2 Persons</option>
+                                <option value="3">3 Persons</option>
+                                <option value="4">4 Persons</option>
+                                <option value="5">5 Persons</option>
+                                <option value="6">6+ Persons</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Travel Date *</label>
+                        <input type="date" th:field="*{travelDate}" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Special Requests</label>
+                        <textarea th:field="*{specialRequest}" class="form-control" rows="3" placeholder="Any dietary requirements, accessibility needs, or special occasions?"></textarea>
+                    </div>
+
+                    <div th:if="${package.freePackage}" class="free-consent-box">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="freeConsent" required/>
+                            <span>I understand this is a FREE package and I agree to accept a special condition which will be disclosed to me upon arrival in Thailand. I trust ThaiWonder Tours and acknowledge this condition is legal and non-harmful.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-block" th:classappend="${package.freePackage} ? 'btn-free' : 'btn-primary'">
+                        <i class="fas fa-check-circle"></i>
+                        <span th:if="${package.freePackage}">Confirm FREE Booking</span>
+                        <span th:unless="${package.freePackage}">Confirm Booking</span>
+                    </button>
+                    <p class="form-note"><i class="fas fa-lock"></i> Your information is secure and will never be shared.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ThaiWonder Tours – Explore Thailand</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=1600" alt="Thailand" class="hero-img"/>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">✈ Welcome to the Land of Smiles</p>
+            <h1 class="hero-title">Discover<br/><em>Thailand</em></h1>
+            <p class="hero-sub">Temples, beaches, jungles &amp; culture — experience it all with expertly curated tour packages designed for every traveler.</p>
+            <div class="hero-cta">
+                <a th:href="@{/packages}" class="btn btn-primary btn-lg">Explore Packages</a>
+                <a th:href="@{/free-packages}" class="btn btn-free btn-lg">🎁 FREE Tours</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-num" th:text="${totalPackages}">8</span><span class="stat-label">Tour Packages</span></div>
+                <div class="stat-div"></div>
+                <div class="stat"><span class="stat-num">2</span><span class="stat-label">FREE Packages</span></div>
+                <div class="stat-div"></div>
+                <div class="stat"><span class="stat-num">5★</span><span class="stat-label">Rated Service</span></div>
+                <div class="stat-div"></div>
+                <div class="stat"><span class="stat-num">10K+</span><span class="stat-label">Happy Travelers</span></div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- FREE PACKAGE BANNER -->
+    <section class="free-banner">
+        <div class="free-banner-inner">
+            <div class="free-banner-icon">🎁</div>
+            <div class="free-banner-text">
+                <h2>Travel Thailand Completely FREE!</h2>
+                <p>No money needed. Just accept our one unique condition — revealed only after you arrive in Thailand.</p>
+            </div>
+            <a th:href="@{/free-packages}" class="btn btn-free-dark">Claim Free Tour →</a>
+        </div>
+    </section>
+
+    <!-- POPULAR PACKAGES -->
+    <section class="section packages-section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-eyebrow">Handpicked Experiences</p>
+                <h2 class="section-title">Popular Tour Packages</h2>
+                <p class="section-sub">From bustling Bangkok to serene island escapes — find your perfect Thailand adventure.</p>
+            </div>
+            <div class="packages-grid">
+                <div th:each="pkg : ${packages}" th:if="${!pkg.freePackage}" class="package-card">
+                    <div class="card-img-wrap">
+                        <img th:src="${pkg.imageUrl}" th:alt="${pkg.name}" class="card-img" loading="lazy"/>
+                        <div class="card-badge" th:text="${pkg.category}">City</div>
+                        <div class="card-rating">
+                            <i class="fas fa-star"></i>
+                            <span th:text="${pkg.rating}">4.8</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-dest"><i class="fas fa-map-marker-alt"></i> <span th:text="${pkg.destination}">Bangkok</span></p>
+                        <h3 class="card-title" th:text="${pkg.name}">Package Name</h3>
+                        <p class="card-duration"><i class="fas fa-clock"></i> <span th:text="${pkg.duration}">5 Days</span></p>
+                        <p class="card-desc" th:text="${#strings.abbreviate(pkg.description, 100)}">Description</p>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-from">From</span>
+                                <span class="price-amt" th:text="'$' + ${#numbers.formatDecimal(pkg.price, 0, 0)}">$1299</span>
+                                <span class="price-pp">/ person</span>
+                            </div>
+                            <a th:href="@{/package/{id}(id=${pkg.id})}" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-cta">
+                <a th:href="@{/packages}" class="btn btn-outline btn-lg">View All Packages →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FREE PACKAGES TEASER -->
+    <section class="free-section">
+        <div class="section-container">
+            <div class="section-header light">
+                <p class="section-eyebrow">Exclusive Offer</p>
+                <h2 class="section-title">🎁 Travel for FREE</h2>
+                <p class="section-sub">Our unique "Travel Now, Reveal Later" program lets you experience all of Thailand without spending a dime. One special condition. Disclosed on arrival.</p>
+            </div>
+            <div class="free-grid">
+                <div th:each="pkg : ${freePackages}" class="free-card">
+                    <div class="free-card-img-wrap">
+                        <img th:src="${pkg.imageUrl}" th:alt="${pkg.name}" class="free-card-img" loading="lazy"/>
+                        <div class="free-label">FREE</div>
+                    </div>
+                    <div class="free-card-body">
+                        <p class="card-dest"><i class="fas fa-map-marker-alt"></i> <span th:text="${pkg.destination}">Thailand</span></p>
+                        <h3 th:text="${pkg.name}">Free Package</h3>
+                        <p th:text="${pkg.duration}">14 Days</p>
+                        <p class="free-teaser">Includes all meals, stays, flights &amp; experiences. The condition is kept secret until arrival — all we can say is, it's not what you think! 😉</p>
+                        <a th:href="@{/package/{id}(id=${pkg.id})}" class="btn btn-free btn-block">Claim This Package</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section class="section why-section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-eyebrow">Why Choose Us</p>
+                <h2 class="section-title">The ThaiWonder Difference</h2>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">🏆</div>
+                    <h3>Award-Winning Service</h3>
+                    <p>Recognized as Thailand's top boutique tour operator for 5 consecutive years.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🔐</div>
+                    <h3>Safe &amp; Trusted</h3>
+                    <p>Licensed by the Tourism Authority of Thailand. 100% vetted partners and guides.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">💸</div>
+                    <h3>Best Price Guarantee</h3>
+                    <p>Found cheaper? We'll match it. And our FREE packages are truly unbeatable.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🎯</div>
+                    <h3>Tailored Experiences</h3>
+                    <p>Every itinerary is crafted by local Thai experts who know every hidden gem.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">📞</div>
+                    <h3>24/7 Support</h3>
+                    <p>Our team is always available during your trip to handle any situation.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🌿</div>
+                    <h3>Eco-Responsible</h3>
+                    <p>We partner with sustainable operators and support local Thai communities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESTINATIONS -->
+    <section class="section destinations-section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-eyebrow">Top Destinations</p>
+                <h2 class="section-title">Where Will You Go?</h2>
+            </div>
+            <div class="dest-grid">
+                <a th:href="@{/packages(category=City)}" class="dest-card">
+                    <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400" alt="Bangkok" loading="lazy"/>
+                    <div class="dest-overlay"><h3>Bangkok</h3><p>City of Angels</p></div>
+                </a>
+                <a th:href="@{/packages(category=Beach)}" class="dest-card">
+                    <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=400" alt="Phuket" loading="lazy"/>
+                    <div class="dest-overlay"><h3>Phuket</h3><p>Island Paradise</p></div>
+                </a>
+                <a th:href="@{/packages(category=Cultural)}" class="dest-card">
+                    <img src="https://images.unsplash.com/photo-1542049887671-73a3687b16f6?w=400" alt="Chiang Mai" loading="lazy"/>
+                    <div class="dest-overlay"><h3>Chiang Mai</h3><p>Cultural Heart</p></div>
+                </a>
+                <a th:href="@{/packages(category=Adventure)}" class="dest-card">
+                    <img src="https://images.unsplash.com/photo-1559628233-100c798642d7?w=400" alt="Krabi" loading="lazy"/>
+                    <div class="dest-overlay"><h3>Krabi</h3><p>Adventure Awaits</p></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section testimonials-section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-eyebrow">Real Stories</p>
+                <h2 class="section-title">What Travelers Say</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"I took the FREE package and was honestly skeptical. The 'condition' was totally fun and not what I expected at all. Had the best 14 days of my life in Thailand!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SL</div>
+                        <div><strong>Sarah L.</strong><br/><small>United States · Verified Traveler</small></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Bangkok City Explorer was flawlessly organized. Every hotel, guide, and transfer was top quality. I've booked my second trip already!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MK</div>
+                        <div><strong>Markus K.</strong><br/><small>Germany · Verified Traveler</small></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Phuket Paradise was beyond beautiful. The island hopping alone was worth everything. ThaiWonder made every moment magical."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AJ</div>
+                        <div><strong>Aiko J.</strong><br/><small>Japan · Verified Traveler</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

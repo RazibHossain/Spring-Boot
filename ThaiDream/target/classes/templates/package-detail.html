@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${package.name} + ' | ThaiWonder Tours'">Package | ThaiWonder Tours</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- Package Hero -->
+    <div class="detail-hero">
+        <img th:src="${package.imageUrl}" th:alt="${package.name}" class="detail-hero-img"/>
+        <div class="detail-hero-overlay">
+            <div class="detail-hero-content">
+                <div class="detail-badge" th:classappend="${package.freePackage} ? 'badge-free' : 'badge-paid'"
+                     th:text="${package.freePackage} ? '🎁 FREE PACKAGE' : ${package.category}">Category</div>
+                <h1 th:text="${package.name}">Package Name</h1>
+                <div class="detail-meta">
+                    <span><i class="fas fa-map-marker-alt"></i> <span th:text="${package.destination}">Destination</span></span>
+                    <span><i class="fas fa-clock"></i> <span th:text="${package.duration}">Duration</span></span>
+                    <span><i class="fas fa-users"></i> Max <span th:text="${package.maxGuests}">20</span> guests</span>
+                    <span><i class="fas fa-star"></i> <span th:text="${package.rating}">4.8</span> rating</span>
+                    <span><i class="fas fa-hiking"></i> <span th:text="${package.difficulty}">Easy</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="detail-container">
+            <div class="detail-main">
+                <!-- Description -->
+                <div class="detail-block">
+                    <h2>About This Tour</h2>
+                    <p th:text="${package.description}">Description</p>
+                </div>
+
+                <!-- Highlights -->
+                <div class="detail-block">
+                    <h2>Tour Highlights</h2>
+                    <ul class="highlights-list">
+                        <li th:each="h : ${package.highlights}">
+                            <i class="fas fa-check-circle"></i> <span th:text="${h}">Highlight</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Includes -->
+                <div class="detail-block">
+                    <h2>What's Included</h2>
+                    <ul class="includes-list">
+                        <li th:each="inc : ${package.includes}">
+                            <i class="fas fa-check"></i> <span th:text="${inc}">Item</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Free Package Special Notice -->
+                <div th:if="${package.freePackage}" class="free-notice">
+                    <div class="free-notice-icon">🤫</div>
+                    <div>
+                        <h3>About Our Special Condition</h3>
+                        <p>This package is 100% free — zero cost to you! We ask only that you fulfill one special condition, which is disclosed only after you arrive in Thailand. Rest assured it is completely legal, fun, and unique. Thousands of happy travelers have accepted and loved the experience. Book now and join the adventure!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Sidebar -->
+            <div class="detail-sidebar">
+                <div class="booking-card" th:classappend="${package.freePackage} ? 'booking-card-free' : ''">
+                    <div class="booking-price" th:if="${package.freePackage}">
+                        <span class="price-free-lg">FREE</span>
+                        <p class="booking-condition">*Special condition disclosed on arrival</p>
+                    </div>
+                    <div class="booking-price" th:unless="${package.freePackage}">
+                        <span class="price-from">From</span>
+                        <span class="price-lg" th:text="'$' + ${#numbers.formatDecimal(package.price, 0, 0)}">$1299</span>
+                        <span class="price-pp">/ person</span>
+                    </div>
+                    <ul class="booking-includes-preview">
+                        <li th:each="inc, stat : ${package.includes}" th:if="${stat.index < 4}">
+                            <i class="fas fa-check"></i> <span th:text="${inc}">Include</span>
+                        </li>
+                    </ul>
+                    <a th:href="@{/booking/{id}(id=${package.id})}" class="btn btn-lg btn-block"
+                       th:classappend="${package.freePackage} ? 'btn-free' : 'btn-primary'">
+                        <span th:if="${package.freePackage}">🎁 Book FREE Package</span>
+                        <span th:unless="${package.freePackage}">Book This Tour</span>
+                    </a>
+                    <p class="booking-note"><i class="fas fa-shield-alt"></i> Secure booking · Free cancellation 48hrs</p>
+                </div>
+                <div class="sidebar-contact">
+                    <p><i class="fas fa-phone"></i> Questions? Call us:<br/><strong>+66 2 123 4567</strong></p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:hello@thaiwondertours.com">hello@thaiwondertours.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

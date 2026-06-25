@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="footer" class="footer">
+    <div class="footer-container">
+        <div class="footer-col">
+            <div class="footer-brand">
+                <span class="brand-icon">🌺</span> ThaiWonderTours
+            </div>
+            <p class="footer-desc">Your gateway to the Land of Smiles. Unforgettable experiences, expertly crafted for every traveler.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/packages}">All Packages</a></li>
+                <li><a th:href="@{/free-packages}">FREE Tour Packages</a></li>
+                <li><a th:href="@{/about}">About Us</a></li>
+                <li><a th:href="@{/contact}">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Destinations</h4>
+            <ul>
+                <li><a th:href="@{/packages(category=City)}">Bangkok City</a></li>
+                <li><a th:href="@{/packages(category=Beach)}">Phuket Beaches</a></li>
+                <li><a th:href="@{/packages(category=Cultural)}">Chiang Mai Culture</a></li>
+                <li><a th:href="@{/packages(category=Adventure)}">Krabi Adventure</a></li>
+                <li><a th:href="@{/packages(category=Luxury)}">Koh Samui Luxury</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Contact Us</h4>
+            <ul class="contact-list">
+                <li><i class="fas fa-map-marker-alt"></i> 123 Sukhumvit Road, Bangkok 10110</li>
+                <li><i class="fas fa-phone"></i> +66 2 123 4567</li>
+                <li><i class="fas fa-envelope"></i> hello@thaiwondertours.com</li>
+                <li><i class="fas fa-clock"></i> Mon–Sun: 8AM – 8PM (ICT)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 ThaiWonder Tours. All rights reserved. | Made with ❤️ for Thailand</p>
+    </div>
+</footer>
+</body>
+</html>

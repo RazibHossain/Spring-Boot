@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>About Us | ThaiWonder Tours</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="page-hero page-hero-sm">
+        <h1>About ThaiWonder Tours</h1>
+        <p>Passionate about Thailand. Dedicated to unforgettable journeys.</p>
+    </div>
+
+    <section class="section">
+        <div class="about-container">
+            <div class="about-text">
+                <h2>Our Story</h2>
+                <p>Founded in 2012, ThaiWonder Tours was born from a deep love for Thailand and a belief that everyone deserves to experience its magic. What started as a small Bangkok-based operation has grown into one of Thailand's most trusted tour companies, with over 10,000 happy travelers across 60+ countries.</p>
+                <p>Our team is made up of passionate local Thai guides, travel experts, and hospitality professionals who are dedicated to crafting experiences that go beyond the typical tourist trail.</p>
+                <h2>Our Mission</h2>
+                <p>To make Thailand accessible to every traveler — regardless of budget — while supporting local communities, promoting sustainable tourism, and delivering world-class experiences.</p>
+                <div class="about-stats">
+                    <div class="astat"><span class="astat-num">10K+</span><span>Happy Travelers</span></div>
+                    <div class="astat"><span class="astat-num">12</span><span>Years Experience</span></div>
+                    <div class="astat"><span class="astat-num">60+</span><span>Countries Served</span></div>
+                    <div class="astat"><span class="astat-num">5★</span><span>Average Rating</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

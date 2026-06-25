@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Booking Confirmed | ThaiWonder Tours</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <section class="section confirm-section">
+        <div class="confirm-container">
+            <div class="confirm-icon">✅</div>
+            <h1>Booking Confirmed!</h1>
+            <p class="confirm-sub">Your Thailand adventure is officially reserved. Get ready for an amazing experience!</p>
+
+            <div class="confirm-card">
+                <div class="confirm-row">
+                    <span>Booking ID</span>
+                    <strong class="booking-id" th:text="${booking.bookingId}">TH-XXXXXX</strong>
+                </div>
+                <div class="confirm-row">
+                    <span>Package</span>
+                    <strong th:text="${booking.packageName}">Package Name</strong>
+                </div>
+                <div class="confirm-row" th:if="${package != null}">
+                    <span>Destination</span>
+                    <strong th:text="${package.destination}">Thailand</strong>
+                </div>
+                <div class="confirm-row" th:if="${package != null}">
+                    <span>Duration</span>
+                    <strong th:text="${package.duration}">Duration</strong>
+                </div>
+                <div class="confirm-row">
+                    <span>Guest Name</span>
+                    <strong th:text="${booking.firstName + ' ' + booking.lastName}">Name</strong>
+                </div>
+                <div class="confirm-row">
+                    <span>Email</span>
+                    <strong th:text="${booking.email}">email</strong>
+                </div>
+                <div class="confirm-row">
+                    <span>Guests</span>
+                    <strong th:text="${booking.guests}">2</strong>
+                </div>
+                <div class="confirm-row">
+                    <span>Travel Date</span>
+                    <strong th:text="${booking.travelDate}">Date</strong>
+                </div>
+                <div class="confirm-row">
+                    <span>Total Price</span>
+                    <strong th:if="${booking.freePackage}" class="price-free">FREE 🎁</strong>
+                    <strong th:unless="${booking.freePackage}" th:text="'$' + ${#numbers.formatDecimal(package.price * booking.guests, 0, 0)}">$0</strong>
+                </div>
+                <div class="confirm-row">
+                    <span>Status</span>
+                    <strong class="status-confirmed" th:text="${booking.status}">Confirmed</strong>
+                </div>
+                <div class="confirm-row">
+                    <span>Booked On</span>
+                    <strong th:text="${booking.createdAt}">Date</strong>
+                </div>
+            </div>
+
+            <div th:if="${booking.freePackage}" class="free-confirm-note">
+                <div class="free-notice-icon">🤫</div>
+                <div>
+                    <h3>Your Free Package is Confirmed!</h3>
+                    <p>Our team will contact you at <strong th:text="${booking.email}">your email</strong> within 24 hours with your full travel itinerary. The special condition will be revealed by our local guide upon your arrival. We can't wait to welcome you to Thailand!</p>
+                </div>
+            </div>
+
+            <p class="confirm-email-note">A confirmation email has been sent to <strong th:text="${booking.email}">your email</strong>.</p>
+
+            <div class="confirm-actions">
+                <a th:href="@{/}" class="btn btn-outline">Back to Home</a>
+                <a th:href="@{/packages}" class="btn btn-primary">Explore More Packages</a>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

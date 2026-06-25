@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tour Packages | ThaiWonder Tours</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="page-hero page-hero-sm">
+        <h1>Tour Packages</h1>
+        <p>Choose from our hand-crafted Thailand experiences</p>
+    </div>
+
+    <section class="section">
+        <div class="section-container">
+            <!-- Category Filter -->
+            <div class="filter-bar">
+                <a th:href="@{/packages}" th:classappend="${selectedCategory == null} ? 'active' : ''" class="filter-btn">All</a>
+                <a th:href="@{/packages(category=City)}" th:classappend="${selectedCategory == 'City'} ? 'active' : ''" class="filter-btn">City</a>
+                <a th:href="@{/packages(category=Beach)}" th:classappend="${selectedCategory == 'Beach'} ? 'active' : ''" class="filter-btn">Beach</a>
+                <a th:href="@{/packages(category=Cultural)}" th:classappend="${selectedCategory == 'Cultural'} ? 'active' : ''" class="filter-btn">Cultural</a>
+                <a th:href="@{/packages(category=Adventure)}" th:classappend="${selectedCategory == 'Adventure'} ? 'active' : ''" class="filter-btn">Adventure</a>
+                <a th:href="@{/packages(category=Luxury)}" th:classappend="${selectedCategory == 'Luxury'} ? 'active' : ''" class="filter-btn">Luxury</a>
+                <a th:href="@{/free-packages}" class="filter-btn filter-free">🎁 FREE</a>
+            </div>
+
+            <div class="packages-grid" th:if="${!packages.isEmpty()}">
+                <div th:each="pkg : ${packages}" class="package-card" th:classappend="${pkg.freePackage} ? 'free-package-card' : ''">
+                    <div class="card-img-wrap">
+                        <img th:src="${pkg.imageUrl}" th:alt="${pkg.name}" class="card-img" loading="lazy"/>
+                        <div class="card-badge free-badge" th:if="${pkg.freePackage}">FREE 🎁</div>
+                        <div class="card-badge" th:unless="${pkg.freePackage}" th:text="${pkg.category}">City</div>
+                        <div class="card-rating">
+                            <i class="fas fa-star"></i>
+                            <span th:text="${pkg.rating}">4.8</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-dest"><i class="fas fa-map-marker-alt"></i> <span th:text="${pkg.destination}">Bangkok</span></p>
+                        <h3 class="card-title" th:text="${pkg.name}">Package Name</h3>
+                        <p class="card-duration"><i class="fas fa-clock"></i> <span th:text="${pkg.duration}">5 Days</span> &nbsp;|&nbsp; <i class="fas fa-users"></i> Max <span th:text="${pkg.maxGuests}">20</span></p>
+                        <p class="card-desc" th:text="${#strings.abbreviate(pkg.description, 110)}">Description</p>
+                        <div class="card-footer">
+                            <div class="card-price" th:if="${pkg.freePackage}">
+                                <span class="price-free">FREE</span>
+                                <span class="price-condition">*condition applies on arrival</span>
+                            </div>
+                            <div class="card-price" th:unless="${pkg.freePackage}">
+                                <span class="price-from">From</span>
+                                <span class="price-amt" th:text="'$' + ${#numbers.formatDecimal(pkg.price, 0, 0)}">$1299</span>
+                                <span class="price-pp">/ person</span>
+                            </div>
+                            <a th:href="@{/package/{id}(id=${pkg.id})}" class="btn btn-sm" th:classappend="${pkg.freePackage} ? 'btn-free' : 'btn-primary'">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${packages.isEmpty()}" class="empty-state">
+                <p>No packages found in this category. <a th:href="@{/packages}">View all packages</a></p>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

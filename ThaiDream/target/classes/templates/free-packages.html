@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FREE Tour Packages | ThaiWonder Tours</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="page-hero free-page-hero">
+        <div class="free-page-hero-content">
+            <p class="hero-eyebrow">🎁 Exclusive Offer</p>
+            <h1>Travel Thailand<br/><em>Absolutely FREE</em></h1>
+            <p>No money. No tricks. One unique condition. Revealed on arrival.</p>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <section class="section how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">How Our FREE Package Works</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h3>Choose a FREE Package</h3>
+                    <p>Browse our exclusive free tour packages covering Thailand's best destinations.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h3>Complete Your Booking</h3>
+                    <p>Fill in your details and confirm. No credit card required — it's truly free.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h3>Fly to Thailand</h3>
+                    <p>We arrange everything. All hotels, meals, transport &amp; experiences included.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <h3>Discover the Condition</h3>
+                    <p>Our team reveals your one special condition upon arrival. It's fun — promise! 😉</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Teaser -->
+    <section class="free-faq-banner">
+        <div class="faq-inner">
+            <h3>Wondering about the condition?</h3>
+            <p>We receive this question a lot! All we can tell you is: it's legal, it's fun, it's unique, and it's not what you think. Our thousands of travelers who've done it wish they hadn't spent a second worrying. 😄</p>
+        </div>
+    </section>
+
+    <!-- Free Packages -->
+    <section class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Available FREE Packages</h2>
+            </div>
+            <div class="free-grid-lg">
+                <div th:each="pkg : ${freePackages}" class="free-card-lg">
+                    <div class="free-card-img-wrap">
+                        <img th:src="${pkg.imageUrl}" th:alt="${pkg.name}" class="free-card-img" loading="lazy"/>
+                        <div class="free-label-lg">FREE</div>
+                        <div class="card-rating"><i class="fas fa-star"></i> <span th:text="${pkg.rating}">5.0</span></div>
+                    </div>
+                    <div class="free-card-body-lg">
+                        <p class="card-dest"><i class="fas fa-map-marker-alt"></i> <span th:text="${pkg.destination}">Thailand</span></p>
+                        <h2 th:text="${pkg.name}">Free Package</h2>
+                        <p class="card-duration"><i class="fas fa-clock"></i> <span th:text="${pkg.duration}">14 Days</span> &nbsp;|&nbsp; Max <span th:text="${pkg.maxGuests}">8</span> guests</p>
+                        <p th:text="${pkg.description}">Description</p>
+                        <div class="includes-preview">
+                            <strong>Everything Included:</strong>
+                            <div class="includes-tags">
+                                <span th:each="inc : ${pkg.includes}" class="inc-tag"><i class="fas fa-check"></i> <span th:text="${inc}">Item</span></span>
+                            </div>
+                        </div>
+                        <div class="free-card-footer">
+                            <div>
+                                <span class="price-free-md">$0.00</span>
+                                <span class="cond-label">*condition on arrival</span>
+                            </div>
+                            <a th:href="@{/package/{id}(id=${pkg.id})}" class="btn btn-free btn-lg">View &amp; Book</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
